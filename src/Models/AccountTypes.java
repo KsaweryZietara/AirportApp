@@ -1,6 +1,6 @@
 package Models;
 
-public enum AccountType {
+public enum AccountTypes {
     USER,
     ADMIN
 }

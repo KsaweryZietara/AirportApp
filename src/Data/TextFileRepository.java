@@ -1,5 +1,9 @@
 package Data;
 
+import Dto.CreateUserDto;
+import Dto.LoggedUserDto;
+import Dto.LoginUserDto;
+import Models.AccountTypes;
 import Models.Flight;
 import Models.User;
 
@@ -22,14 +26,32 @@ public class TextFileRepository implements DataRepository {
     }
 
     @Override
-    public void addUser(User user) {
+    public LoggedUserDto validUser(LoginUserDto loginUserDto){
+        for (User u : Users){
+            if(u.getLogin().equals(loginUserDto.getLogin()) &&
+                    u.getPassword().equals(loginUserDto.getPassword())){
+                return new LoggedUserDto(u.getId(), u.getLogin(), u.getAccountType(), u.getMarkedFlights());
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void addUser(CreateUserDto createUserDto) {
+        User user = new User(getHighestId() + 1,
+                                createUserDto.getLogin(),
+                                createUserDto.getPassword(),
+                                createUserDto.getEmail(),
+                                createUserDto.getAccountType(),
+                                new ArrayList<>());
         Users.add(user);
         saveUsers();
     }
 
     @Override
-    public void removeUser(User user) {
-
+    public void removeUser(int id) {
+        Users.removeIf(x -> x.getId() == id);
+        saveUsers();
     }
 
     @Override
@@ -52,6 +74,16 @@ public class TextFileRepository implements DataRepository {
                                     .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    private int getHighestId(){
+        int max = 1;
+        for (User u : Users){
+            if(u.getId() > max){
+                max = u.getId();
+            }
+        }
+        return max;
+    }
+
     private void getUsers() {
         try {
             File file = new File(USERSPATH);
@@ -61,10 +93,21 @@ public class TextFileRepository implements DataRepository {
                 String data = myReader.nextLine();
                 String[] arr = data.split(";");
 
-                String[] flightsArray = arr[3].split(",");
-                ArrayList<String> flights = new ArrayList<>(Arrays.asList(flightsArray));
+                ArrayList<String> flights = new ArrayList<>();
+                if (arr.length == 6){
+                    String[] flightsArray = arr[5].split(",");
+                    flights = new ArrayList<>(Arrays.asList(flightsArray));
+                }
 
-                User user = new User(arr[0], arr[1], arr[2], flights);
+                AccountTypes account;
+                if(arr[4].equals("ADMIN")){
+                    account = AccountTypes.ADMIN;
+                }
+                else {
+                    account = AccountTypes.USER;
+                }
+
+                User user = new User(Integer.parseInt(arr[0]), arr[1], arr[2], arr[3], account, flights);
                 Users.add(user);
             }
         }catch (Exception e){
@@ -72,7 +115,7 @@ public class TextFileRepository implements DataRepository {
         }
     }
 
-    public void saveUsers(){
+    private void saveUsers(){
         try {
             FileWriter myWriter = new FileWriter(USERSPATH);
             for (User u : Users){

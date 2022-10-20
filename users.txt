@@ -1,1 +1,2 @@
-log;pass;email;1234,2341,23412,12341
+1;log1;pass1;email1;ADMIN;1234,2341,23412,12341
+3;log3;pass3;email3;USER;

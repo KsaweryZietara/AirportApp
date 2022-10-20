@@ -1,14 +1,13 @@
 import Data.TextFileRepository;
+import Dto.CreateUserDto;
+import Models.AccountTypes;
 import Models.Flight;
 
 import java.util.ArrayList;
 
-
 public class Main {
     public static void main(String[] args) {
         TextFileRepository t = new TextFileRepository();
-        //t.addFlight(new Flight("katowice", "warszawa", "ddddd", "32334234"));
-        t.saveUsers();
-
+        t.removeUser(2);
     }
 }
