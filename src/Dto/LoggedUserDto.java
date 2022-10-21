@@ -16,4 +16,20 @@ public class LoggedUserDto {
         this.AccountType = accountType;
         this.MarkedFlights = markedFlights;
     }
+
+    public int getId() {
+        return this.Id;
+    }
+
+    public String getLogin() {
+        return this.Login;
+    }
+
+    public AccountTypes getAccountType() {
+        return this.AccountType;
+    }
+
+    public ArrayList<String> getMarkedFlights() {
+        return this.MarkedFlights;
+    }
 }
