@@ -1,4 +1,4 @@
-package Dto;
+package Dtos;
 
 public class LoginUserDto {
     private String Login;

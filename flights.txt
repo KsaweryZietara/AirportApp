@@ -1,2 +1,5 @@
 r;s;ddddd;3233
-katowice;warszawa;ddddd;323
+katowice;warszawa;ddddd;32365
+katowice;warszawa;ddd;323654
+katowice;warszawa;dd;323453
+katowice;warszawa;dddd;32323

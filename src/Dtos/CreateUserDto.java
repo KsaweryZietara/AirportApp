@@ -1,4 +1,4 @@
-package Dto;
+package Dtos;
 
 import Models.AccountTypes;
 

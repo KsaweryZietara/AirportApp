@@ -19,6 +19,14 @@ public class User {
         this.MarkedFlights = markedFlights;
     }
 
+    public void addMarkedFlight(String flightNumber){
+        MarkedFlights.add(flightNumber);
+    }
+
+    public void removeMarkedFlight(String flightNumber){
+        MarkedFlights.removeIf(x -> x.equals(flightNumber));
+    }
+
     public int getId() {
         return this.Id;
     }

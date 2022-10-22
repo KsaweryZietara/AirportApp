@@ -1,8 +1,8 @@
 package Data;
 
-import Dto.CreateUserDto;
-import Dto.LoggedUserDto;
-import Dto.LoginUserDto;
+import Dtos.CreateUserDto;
+import Dtos.LoggedUserDto;
+import Dtos.LoginUserDto;
 import Models.AccountTypes;
 import Models.Flight;
 import Models.User;
@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,26 @@ public class TextFileRepository implements DataRepository {
     public TextFileRepository(){
         getFlights();
         getUsers();
+    }
+
+    @Override
+    public void addMarkedFlight(int id, String flightNumber) {
+        for (User u : Users){
+            if (id == u.getId()){
+                u.addMarkedFlight(flightNumber);
+            }
+        }
+        saveUsers();
+    }
+
+    @Override
+    public void removeMarkedFlight(int id, String flightNumber) {
+        for (User u : Users){
+            if(id == u.getId()){
+                u.removeMarkedFlight(flightNumber);
+            }
+        }
+        saveUsers();
     }
 
     @Override
@@ -67,11 +88,23 @@ public class TextFileRepository implements DataRepository {
     }
 
     @Override
-    public ArrayList<Flight> findFlights(String departureCity, String arrivalCity) {
+    public List<Flight> findFlights(String departureCity, String arrivalCity) {
         return Flights.stream().filter(x ->
                                     x.getDepartureCity().equals(departureCity) &&
                                     x.getArrivalCity().equals(arrivalCity))
                                     .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @Override
+    public List<Flight> userFlights(int id) {
+        User user = Users.stream()
+                .filter(x -> x.getId() == id)
+                .findFirst()
+                .orElse(null);
+
+        return Flights.stream()
+                .filter(x -> user.getMarkedFlights().contains(x.getFlightNumber()))
+                .toList();
     }
 
     private int getHighestId(){
