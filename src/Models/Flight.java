@@ -1,39 +1,40 @@
 package Models;
 
 public class Flight {
-    private String DepartureCity;
-    private String ArrivalCity;
-    private String Airline;
-    private String FlightNumber;
+    private String departureCity;
+    private String arrivalCity;
+    private String airline;
+    private String flightNumber;
 
     public Flight(String departureCity, String arrivalCity, String airline, String flightNumber){
-        this.DepartureCity = departureCity;
-        this.ArrivalCity = arrivalCity;
-        this.Airline = airline;
-        this.FlightNumber = flightNumber;
+        this.departureCity = departureCity;
+        this.arrivalCity = arrivalCity;
+        this.airline = airline;
+        this.flightNumber = flightNumber;
     }
 
     public String getDepartureCity() {
-        return DepartureCity;
+        return departureCity;
     }
 
     public String getArrivalCity() {
-        return ArrivalCity;
+        return arrivalCity;
     }
 
     public String getAirline() {
-        return Airline;
+        return airline;
     }
 
     public String getFlightNumber() {
-        return FlightNumber;
+        return flightNumber;
     }
 
-    public String getFlightString(){
-        return DepartureCity + ";" +
-                ArrivalCity + ";" +
-                Airline + ";" +
-                FlightNumber;
+    @Override
+    public String toString(){
+        return departureCity + ";" +
+                arrivalCity + ";" +
+                airline + ";" +
+                flightNumber;
     }
 }
 

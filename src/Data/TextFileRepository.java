@@ -16,10 +16,10 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class TextFileRepository implements DataRepository {
-    final String FLIGHTSPATH = "flights.txt";
-    final String USERSPATH = "users.txt";
-    ArrayList<Flight> Flights = new ArrayList<>();
-    ArrayList<User> Users = new ArrayList<>();
+    final String FLIGHTSPATH = "src/Resources/flights.txt";
+    final String USERSPATH = "src/Resources/users.txt";
+    ArrayList<Flight> flights = new ArrayList<>();
+    ArrayList<User> users = new ArrayList<>();
 
     public TextFileRepository(){
         getFlights();
@@ -28,7 +28,7 @@ public class TextFileRepository implements DataRepository {
 
     @Override
     public void addMarkedFlight(int id, String flightNumber) {
-        for (User u : Users){
+        for (User u : users){
             if (id == u.getId()){
                 u.addMarkedFlight(flightNumber);
             }
@@ -38,7 +38,7 @@ public class TextFileRepository implements DataRepository {
 
     @Override
     public void removeMarkedFlight(int id, String flightNumber) {
-        for (User u : Users){
+        for (User u : users){
             if(id == u.getId()){
                 u.removeMarkedFlight(flightNumber);
             }
@@ -48,7 +48,7 @@ public class TextFileRepository implements DataRepository {
 
     @Override
     public LoggedUserDto validUser(LoginUserDto loginUserDto){
-        for (User u : Users){
+        for (User u : users){
             if(u.getLogin().equals(loginUserDto.getLogin()) &&
                     u.getPassword().equals(loginUserDto.getPassword())){
                 return new LoggedUserDto(u.getId(), u.getLogin(), u.getAccountType(), u.getMarkedFlights());
@@ -65,31 +65,31 @@ public class TextFileRepository implements DataRepository {
                                 createUserDto.getEmail(),
                                 createUserDto.getAccountType(),
                                 new ArrayList<>());
-        Users.add(user);
+        users.add(user);
         saveUsers();
     }
 
     @Override
     public void removeUser(int id) {
-        Users.removeIf(x -> x.getId() == id);
+        users.removeIf(x -> x.getId() == id);
         saveUsers();
     }
 
     @Override
     public void addFlight(Flight flight) {
-        Flights.add(flight);
+        flights.add(flight);
         saveFlights();
     }
 
     @Override
     public void removeFlight(String flightNumber) {
-        Flights.removeIf(x -> x.getFlightNumber().equals(flightNumber));
+        flights.removeIf(x -> x.getFlightNumber().equals(flightNumber));
         saveFlights();
     }
 
     @Override
     public List<Flight> findFlights(String departureCity, String arrivalCity) {
-        return Flights.stream().filter(x ->
+        return flights.stream().filter(x ->
                                     x.getDepartureCity().equals(departureCity) &&
                                     x.getArrivalCity().equals(arrivalCity))
                                     .collect(Collectors.toCollection(ArrayList::new));
@@ -97,19 +97,19 @@ public class TextFileRepository implements DataRepository {
 
     @Override
     public List<Flight> userFlights(int id) {
-        User user = Users.stream()
+        User user = users.stream()
                 .filter(x -> x.getId() == id)
                 .findFirst()
                 .orElse(null);
 
-        return Flights.stream()
+        return flights.stream()
                 .filter(x -> user.getMarkedFlights().contains(x.getFlightNumber()))
                 .toList();
     }
 
     private int getHighestId(){
         int max = 1;
-        for (User u : Users){
+        for (User u : users){
             if(u.getId() > max){
                 max = u.getId();
             }
@@ -141,7 +141,7 @@ public class TextFileRepository implements DataRepository {
                 }
 
                 User user = new User(Integer.parseInt(arr[0]), arr[1], arr[2], arr[3], account, flights);
-                Users.add(user);
+                users.add(user);
             }
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -151,8 +151,8 @@ public class TextFileRepository implements DataRepository {
     private void saveUsers(){
         try {
             FileWriter myWriter = new FileWriter(USERSPATH);
-            for (User u : Users){
-                myWriter.write(u.getUserString() + "\n");
+            for (User u : users){
+                myWriter.write(u.toString() + "\n");
             }
             myWriter.close();
         }catch (Exception e){
@@ -169,7 +169,7 @@ public class TextFileRepository implements DataRepository {
                 String data = myReader.nextLine();
                 String[] arr = data.split(";");
                 Flight flight = new Flight(arr[0], arr[1], arr[2], arr[3]);
-                Flights.add(flight);
+                flights.add(flight);
             }
         }catch (Exception e){
             System.out.println(e.getMessage());
@@ -179,8 +179,8 @@ public class TextFileRepository implements DataRepository {
     private void saveFlights(){
         try {
             FileWriter myWriter = new FileWriter(FLIGHTSPATH);
-            for (Flight f : Flights){
-                myWriter.write(f.getFlightString() + "\n");
+            for (Flight f : flights){
+                myWriter.write(f.toString() + "\n");
             }
             myWriter.close();
         }catch (Exception e){

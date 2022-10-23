@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class App {
     private final DataRepository repository;
-    private final Scanner myObj = new Scanner(System.in);
+    private final Scanner scanner = new Scanner(System.in);
 
     public App(DataRepository repository) {
         this.repository = repository;
@@ -28,11 +28,11 @@ public class App {
                             "1.Login\n" +
                             "2.Register\n" +
                             "3.Exit");
-        String input = myObj.nextLine();
+        String input = scanner.nextLine();
 
         while (validNumber(input, 0, 4) == -1){
             System.out.println("Invalid input pick number again.");
-            input = myObj.nextLine();
+            input = scanner.nextLine();
         }
 
         int number = validNumber(input, 0, 4);
@@ -54,11 +54,11 @@ public class App {
                 "1.Search for flights\n" +
                 "2.Your flights\n" +
                 "3.Log out");
-        String input = myObj.nextLine();
+        String input = scanner.nextLine();
 
         while (validNumber(input, 0, 4) == -1){
             System.out.println("Invalid input pick number again.");
-            input = myObj.nextLine();
+            input = scanner.nextLine();
         }
 
         int number = validNumber(input, 0, 4);
@@ -82,11 +82,11 @@ public class App {
                 "3.Add flight\n" +
                 "4.Remove flight\n" +
                 "5.Log out");
-        String input = myObj.nextLine();
+        String input = scanner.nextLine();
 
         while (validNumber(input, 0, 6) == -1){
             System.out.println("Invalid input pick number again.");
-            input = myObj.nextLine();
+            input = scanner.nextLine();
         }
 
         int number = validNumber(input, 0, 6);
@@ -111,13 +111,13 @@ public class App {
 
     private void addUserOption(){
         System.out.println("Enter login");
-        String login = myObj.nextLine();
+        String login = scanner.nextLine();
         System.out.println("Enter password");
-        String password = myObj.nextLine();
+        String password = scanner.nextLine();
         System.out.println("Enter email");
-        String email = myObj.nextLine();
+        String email = scanner.nextLine();
         System.out.println("Enter account type");
-        String account = myObj.nextLine();
+        String account = scanner.nextLine();
 
         AccountTypes accountType;
 
@@ -132,46 +132,65 @@ public class App {
         repository.addUser(user);
 
         System.out.println("User has been added, click enter to continue");
-        String s = myObj.nextLine();
+        String s = scanner.nextLine();
     }
 
     private void removeUserOption(){
         System.out.println("Enter user id");
-        String id = myObj.nextLine();
+        String id = scanner.nextLine();
         int number;
 
         try{
             number = Integer.parseInt(id);
         }catch (Exception ignored){
             System.out.println("Invalid id, click enter to continue");
-            String s = myObj.nextLine();
+            String s = scanner.nextLine();
             return;
         }
 
         repository.removeUser(number);
         System.out.println("User has been deleted, click enter to continue");
-        String s = myObj.nextLine();
+        String s = scanner.nextLine();
     }
 
     private void addFlightOption(){
-        //TODO
+        System.out.println("Enter departure city");
+        String departureCity = scanner.nextLine();
+        System.out.println("Enter arrival city");
+        String arrivalCity = scanner.nextLine();
+        System.out.println("Enter airline");
+        String airline = scanner.nextLine();
+        System.out.println("Enter flightNumber");
+        String flightNumber = scanner.nextLine();
+
+        Flight flight = new Flight(departureCity, arrivalCity, airline, flightNumber);
+        repository.addFlight(flight);
+
+        System.out.println("Flight has been added, click enter to continue");
+        String s = scanner.nextLine();
     }
 
     private void removeFlightOption(){
-        //TODO
+        System.out.println("Enter flight number");
+        String flightNumber = scanner.nextLine();
+
+        repository.removeFlight(flightNumber);
+
+        System.out.println("Flight has been deleted, click enter to continue");
+        String s = scanner.nextLine();
     }
 
     private void findFlightOption(LoggedUserDto userDto){
         System.out.println("Enter departure city");
-        String departureCity = myObj.nextLine();
+        String departureCity = scanner.nextLine();
         System.out.println("Enter arrival city");
-        String arrivalCity = myObj.nextLine();
+        String arrivalCity = scanner.nextLine();
 
         List<Flight> flights = repository.findFlights(departureCity, arrivalCity);
 
         if(flights.size() == 0){
             System.out.println("There is no available flights, click enter to continue");
-            String s = myObj.nextLine();
+            String s = scanner.nextLine();
             return;
         }
 
@@ -184,11 +203,11 @@ public class App {
         }
 
         System.out.println("\nPick 0 if you want to exit or number of the flight to add it to the marked flights");
-        String n = myObj.nextLine();
+        String n = scanner.nextLine();
 
         while (validNumber(n, -1, flights.size() + 1) == -1){
             System.out.println("Invalid input pick number again.");
-            n = myObj.nextLine();
+            n = scanner.nextLine();
         }
 
         int number = validNumber(n, -1, flights.size() + 1);
@@ -200,7 +219,7 @@ public class App {
         repository.addMarkedFlight(userDto.getId(), flights.get(number - 1).getFlightNumber());
 
         System.out.println("Flight added, click enter to continue");
-        String s = myObj.nextLine();
+        String s = scanner.nextLine();
     }
 
     private void getMarkedFlightsOption(LoggedUserDto userDto){
@@ -208,7 +227,7 @@ public class App {
 
         if(flights.size() == 0){
             System.out.println("There is no flights, click enter to continue");
-            String s = myObj.nextLine();
+            String s = scanner.nextLine();
             return;
         }
 
@@ -221,11 +240,11 @@ public class App {
         }
 
         System.out.println("\nPick 0 if you want to exit or number of the flight to remove it from the marked flights");
-        String n = myObj.nextLine();
+        String n = scanner.nextLine();
 
         while (validNumber(n, -1, flights.size() + 1) == -1){
             System.out.println("Invalid input pick number again.");
-            n = myObj.nextLine();
+            n = scanner.nextLine();
         }
 
         int number = validNumber(n, -1, flights.size() + 1);
@@ -237,21 +256,21 @@ public class App {
         repository.removeMarkedFlight(userDto.getId(), flights.get(number - 1).getFlightNumber());
 
         System.out.println("Flight removed, click enter to continue");
-        String s = myObj.nextLine();
+        String s = scanner.nextLine();
     }
 
     private void loginOption(){
         System.out.println("Enter login");
-        String login = myObj.nextLine();
+        String login = scanner.nextLine();
         System.out.println("Enter password");
-        String password = myObj.nextLine();
+        String password = scanner.nextLine();
 
         LoginUserDto user = new LoginUserDto(login, password);
         LoggedUserDto loggedUser = repository.validUser(user);
 
         if(loggedUser == null){
             System.out.println("Invalid data, click enter to continue");
-            String input = myObj.nextLine();
+            String input = scanner.nextLine();
         }
         else if(loggedUser.getAccountType() == AccountTypes.USER){
             boolean active = true;
@@ -269,18 +288,18 @@ public class App {
 
     private void registerOption(){
         System.out.println("Enter login");
-        String login = myObj.nextLine();
+        String login = scanner.nextLine();
         System.out.println("Enter password");
-        String password = myObj.nextLine();
+        String password = scanner.nextLine();
         System.out.println("Enter email");
-        String email = myObj.nextLine();
+        String email = scanner.nextLine();
         AccountTypes type = AccountTypes.USER;
 
         CreateUserDto user = new CreateUserDto(login, password, email, type);
         repository.addUser(user);
 
         System.out.println("Account created, click enter to continue");
-        String input = myObj.nextLine();
+        String input = scanner.nextLine();
     }
 
     private int validNumber(String s, int a, int b){

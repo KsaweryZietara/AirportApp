@@ -1,19 +1,19 @@
 package Dtos;
 
 public class LoginUserDto {
-    private String Login;
-    private String Password;
+    private final String login;
+    private final String password;
 
     public LoginUserDto(String login, String password) {
-        this.Login = login;
-        this.Password = password;
+        this.login = login;
+        this.password = password;
     }
 
     public String getLogin() {
-        return this.Login;
+        return this.login;
     }
 
     public String getPassword() {
-        return this.Password;
+        return this.password;
     }
 }

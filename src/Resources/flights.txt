@@ -1,0 +1,2 @@
+Katowice;Warszawa;Lot;1234
+Warszawa;Katowice;Rayanair;5678

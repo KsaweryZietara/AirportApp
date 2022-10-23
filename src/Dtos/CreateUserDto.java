@@ -3,31 +3,31 @@ package Dtos;
 import Models.AccountTypes;
 
 public class CreateUserDto {
-    private String Login;
-    private String Password;
-    private String Email;
-    private AccountTypes AccountType;
+    private final String login;
+    private final String password;
+    private final String email;
+    private final AccountTypes accountType;
 
     public CreateUserDto(String login, String password, String email, AccountTypes accountTypes) {
-        this.Login = login;
-        this.Password = password;
-        this.Email = email;
-        this.AccountType = accountTypes;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.accountType = accountTypes;
     }
 
     public String getLogin() {
-        return this.Login;
+        return this.login;
     }
 
     public String getPassword() {
-        return this.Password;
+        return this.password;
     }
 
     public String getEmail() {
-        return this.Email;
+        return this.email;
     }
 
     public AccountTypes getAccountType() {
-        return this.AccountType;
+        return this.accountType;
     }
 }

@@ -3,61 +3,62 @@ package Models;
 import java.util.ArrayList;
 
 public class User {
-    private int Id;
-    private String Login;
-    private String Password;
-    private String Email;
-    private AccountTypes AccountType;
-    private ArrayList<String> MarkedFlights;
+    private int id;
+    private String login;
+    private String password;
+    private String email;
+    private AccountTypes accountType;
+    private ArrayList<String> markedFlights;
 
     public User(int id, String login, String password, String email, AccountTypes accountType,ArrayList<String> markedFlights) {
-        this.Id = id;
-        this.Login = login;
-        this.Password = password;
-        this.Email = email;
-        this.AccountType = accountType;
-        this.MarkedFlights = markedFlights;
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.email = email;
+        this.accountType = accountType;
+        this.markedFlights = markedFlights;
     }
 
     public void addMarkedFlight(String flightNumber){
-        MarkedFlights.add(flightNumber);
+        markedFlights.add(flightNumber);
     }
 
     public void removeMarkedFlight(String flightNumber){
-        MarkedFlights.removeIf(x -> x.equals(flightNumber));
+        markedFlights.removeIf(x -> x.equals(flightNumber));
     }
 
     public int getId() {
-        return this.Id;
+        return this.id;
     }
 
     public String getLogin() {
-        return this.Login;
+        return this.login;
     }
 
     public String getPassword() {
-        return this.Password;
+        return this.password;
     }
 
     public String getEmail() {
-        return this.Email;
+        return this.email;
     }
 
     public AccountTypes getAccountType() {
-        return this.AccountType;
+        return this.accountType;
     }
 
     public ArrayList<String> getMarkedFlights() {
-        return this.MarkedFlights;
+        return this.markedFlights;
     }
 
-    public String getUserString() {
-        String flights = String.join(",", MarkedFlights);
-        return Id + ";" +
-                Login + ";" +
-                Password + ";" +
-                Email + ";" +
-                AccountType + ";" +
+    @Override
+    public String toString() {
+        String flights = String.join(",", markedFlights);
+        return id + ";" +
+                login + ";" +
+                password + ";" +
+                email + ";" +
+                accountType + ";" +
                 flights;
     }
 }
