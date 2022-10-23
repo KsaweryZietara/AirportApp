@@ -1,6 +1,8 @@
-import Application.App;
-import Data.DataRepository;
-import Data.TextFileRepository;
+package main;
+
+import main.Application.App;
+import main.Data.DataRepository;
+import main.Data.TextFileRepository;
 
 public class Main {
     public static void main(String[] args) {

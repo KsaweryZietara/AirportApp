@@ -1,11 +1,11 @@
-package Data;
+package main.Data;
 
-import Dtos.CreateUserDto;
-import Dtos.LoggedUserDto;
-import Dtos.LoginUserDto;
-import Models.AccountTypes;
-import Models.Flight;
-import Models.User;
+import main.Dtos.CreateUserDto;
+import main.Dtos.LoggedUserDto;
+import main.Dtos.LoginUserDto;
+import main.Models.AccountTypes;
+import main.Models.Flight;
+import main.Models.User;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -16,8 +16,8 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class TextFileRepository implements DataRepository {
-    final String FLIGHTSPATH = "src/Resources/flights.txt";
-    final String USERSPATH = "src/Resources/users.txt";
+    final String FLIGHTSPATH = "src/main/Resources/flights.txt";
+    final String USERSPATH = "src/main/Resources/users.txt";
     ArrayList<Flight> flights = new ArrayList<>();
     ArrayList<User> users = new ArrayList<>();
 

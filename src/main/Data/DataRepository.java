@@ -1,9 +1,9 @@
-package Data;
+package main.Data;
 
-import Dtos.CreateUserDto;
-import Dtos.LoggedUserDto;
-import Dtos.LoginUserDto;
-import Models.Flight;
+import main.Dtos.CreateUserDto;
+import main.Dtos.LoggedUserDto;
+import main.Dtos.LoginUserDto;
+import main.Models.Flight;
 
 import java.util.List;
 
