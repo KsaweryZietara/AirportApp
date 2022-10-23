@@ -1,11 +1,11 @@
-package main.Application;
+package Application;
 
-import main.Data.DataRepository;
-import main.Dtos.CreateUserDto;
-import main.Dtos.LoggedUserDto;
-import main.Dtos.LoginUserDto;
-import main.Models.AccountTypes;
-import main.Models.Flight;
+import Data.DataRepository;
+import Dtos.CreateUserDto;
+import Dtos.LoggedUserDto;
+import Dtos.LoginUserDto;
+import Models.AccountTypes;
+import Models.Flight;
 
 import java.util.List;
 import java.util.Scanner;

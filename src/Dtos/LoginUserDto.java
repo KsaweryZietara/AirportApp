@@ -1,4 +1,4 @@
-package main.Dtos;
+package Dtos;
 
 public class LoginUserDto {
     private final String login;

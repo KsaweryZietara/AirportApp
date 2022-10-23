@@ -1,6 +1,6 @@
-package main.Dtos;
+package Dtos;
 
-import main.Models.AccountTypes;
+import Models.AccountTypes;
 
 public class CreateUserDto {
     private final String login;

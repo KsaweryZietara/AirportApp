@@ -1,4 +1,4 @@
-package main.Models;
+package Models;
 
 public class Flight {
     private String departureCity;
