@@ -16,8 +16,8 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class TextFileRepository implements DataRepository {
-    final String FLIGHTSPATH = "src/Resources/flights.txt";
-    final String USERSPATH = "src/Resources/users.txt";
+    final String FLIGHTSPATH = "Resources/flights.txt";
+    final String USERSPATH = "Resources/users.txt";
     ArrayList<Flight> flights = new ArrayList<>();
     ArrayList<User> users = new ArrayList<>();
 
